@@ -141,7 +141,7 @@ namespace EgnValidatorProgram
         }
 
 
-
+        //Generate date of birth in EGN format from DateTime object.
         private StringBuilder GenerateDateOfBirth(DateTime birthDate)
         {
             StringBuilder egn = new StringBuilder();
@@ -166,7 +166,7 @@ namespace EgnValidatorProgram
         }
 
 
-
+        //Calculates and adds control digits in a List of EGN
         private List<StringBuilder> CalculateControl(List<StringBuilder> egnCollection)
         {
             for (int i = 0; i < egnCollection.Count; i++)
@@ -191,7 +191,7 @@ namespace EgnValidatorProgram
         }
 
 
-
+        //Validates the control digit in EGN
         private bool ValidateControl(string[] egnArray)
         {
             int controlNum = int.Parse(egnArray[^1]);
@@ -213,7 +213,8 @@ namespace EgnValidatorProgram
 
 
 
-
+        //Validate region code.
+        //Currently the method cannot return false,but can be used to return place of birth from an EGN
         private bool ValidateRegion(string[] egnArray)
         {
             int regionCode = int.Parse($"{egnArray[6]}{egnArray[7]}{egnArray[8]}");
@@ -228,7 +229,7 @@ namespace EgnValidatorProgram
         }
 
 
-
+        //Validate date from EGN format
         private bool ValidateDate(string[] egnArray)
         {
             int year = int.Parse($"{egnArray[0]}{egnArray[1]}");
