@@ -22,17 +22,40 @@ namespace EgnValidatorProgram
         public EgnValidator()
         {
             Regions = new Dictionary<string, IEnumerable<int>>();
-            string[] cities = File.ReadAllLines("Regions.txt");
-            foreach (var city in cities)
-            {
-                string[] line = city.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                Regions.Add(line[0], Enumerable.Range(int.Parse(line[1]), int.Parse(line[2]) + 1 - int.Parse(line[1])));
-            }
-            EgnCollection = new List<StringBuilder>();
+            Regions.Add("Благоевград",Enumerable.Range(0,44));
+            Regions.Add("Бургас", Enumerable.Range(44,50));
+            Regions.Add("Варна", Enumerable.Range(94,46));
+            Regions.Add("Велико Търново", Enumerable.Range(140,30));
+            Regions.Add("Видин", Enumerable.Range(170,14));
+            Regions.Add("Враца", Enumerable.Range(184,34));
+            Regions.Add("Габрово", Enumerable.Range(218,16));
+            Regions.Add("Кърджали", Enumerable.Range(234,48));
+            Regions.Add("Кюстендил", Enumerable.Range(282,20));
+            Regions.Add("Ловеч", Enumerable.Range(302,18));
+            Regions.Add("Монтана", Enumerable.Range(320,22));
+            Regions.Add("Пазарджик", Enumerable.Range(342,36));
+            Regions.Add("Перник", Enumerable.Range(378,18));
+            Regions.Add("Плевен", Enumerable.Range(396,40));
+            Regions.Add("Пловдив", Enumerable.Range(436,66));
+            Regions.Add("Разград", Enumerable.Range(502,26));
+            Regions.Add("Русе", Enumerable.Range(528,28));
+            Regions.Add("Силистра", Enumerable.Range(556,20));
+            Regions.Add("Сливен", Enumerable.Range(576,26));
+            Regions.Add("Смолян", Enumerable.Range(602,22));
+            Regions.Add("София - град", Enumerable.Range(624,98));
+            Regions.Add("София - окръг", Enumerable.Range(722,30));
+            Regions.Add("Стара Загора", Enumerable.Range(752,38));
+            Regions.Add("Добрич", Enumerable.Range(790,32));
+            Regions.Add("Търговище", Enumerable.Range(822,22));
+            Regions.Add("Хасково", Enumerable.Range(844, 28));
+            Regions.Add("Шумен", Enumerable.Range(872, 32));
+            Regions.Add("Ямбол", Enumerable.Range(904, 22));
+            Regions.Add("Друг", Enumerable.Range(926, 74));
         }
 
+
         private Dictionary<string, IEnumerable<int>> Regions { get; set; }
-        private List<StringBuilder> EgnCollection { get; set; }
+
 
         /// <summary>
         /// Generate all valid EGN numbers for given criteria.
@@ -65,7 +88,8 @@ namespace EgnValidatorProgram
             }
 
             StringBuilder date = GenerateDateOfBirth(birthDate);
-            
+            List<StringBuilder> EgnCollection = new List<StringBuilder>();
+
             foreach (var regionCode in Regions[city])
             {
                 StringBuilder egnToAdd = new StringBuilder(date.ToString());
@@ -90,11 +114,11 @@ namespace EgnValidatorProgram
         }
 
 
-       
+
         /// <summary>
-        /// Chekcs the validity of EGN
+        /// Checks the validity of EGN
         /// </summary>
-        /// <param name="egn"></param>
+        /// <param name="egn">10 digit EGN to validate</param>
         /// <returns>True for valid,false for invalid</returns>
         public bool Validate(string egn)
         {
@@ -102,12 +126,9 @@ namespace EgnValidatorProgram
             {
                 return false;
             }
-            else
+            else if (long.TryParse(egn, out _) == false)
             {
-                if (long.TryParse(egn, out _) == false)
-                {
-                    return false;
-                }
+                return false;
             }
 
             string[] egnArray = egn.ToCharArray().Select(c => c.ToString()).ToArray();
@@ -141,7 +162,7 @@ namespace EgnValidatorProgram
             {
                 year -= 1900;
             }
-           return egn.Append($"{year:d2}{month:d2}{day:d2}");
+            return egn.Append($"{year:d2}{month:d2}{day:d2}");
         }
 
 
@@ -169,7 +190,7 @@ namespace EgnValidatorProgram
             return egnCollection;
         }
 
-       
+
 
         private bool ValidateControl(string[] egnArray)
         {
