@@ -97,7 +97,7 @@ namespace EgnValidatorProgram
                 {
                     if (regionCode % 2 == 0)
                     {
-                        egnToAdd.Append(regionCode);
+                        egnToAdd.Append($"{ regionCode:d3}");
                         EgnCollection.Add(egnToAdd);
                     }
                 }
@@ -105,7 +105,7 @@ namespace EgnValidatorProgram
                 {
                     if (regionCode % 2 != 0)
                     {
-                        egnToAdd.Append(regionCode);
+                        egnToAdd.Append($"{ regionCode:d3}");
                         EgnCollection.Add(egnToAdd);
                     }
                 }
